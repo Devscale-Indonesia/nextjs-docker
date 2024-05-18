@@ -43,6 +43,7 @@ jobs:
         run: |
           sshpass -p "${SERVER_PASSWORD}" ssh -o StrictHostKeyChecking=no -T ${SERVER_USER}@${SERVER_HOST} << 'EOF'
             docker pull ${{ secrets.DOCKER_USERNAME }}/nextjsdocker:latest
+            cd nextjsdocker
             docker-compose down
             docker-compose -f docker-compose.prod.yml up -d
           EOF
