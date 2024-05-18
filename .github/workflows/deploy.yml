@@ -32,8 +32,8 @@ jobs:
       # - name: Push Docker Image
       #   run: docker push  ${{ secrets.DOCKER_USERNAME }}/nextjsdocker
 
-      # - name: Install sshpass
-      #   run: sudo apt-get install -y sshpass
+      - name: Install sshpass
+        run: sudo apt-get install -y sshpass
 
       # - name: Deploy to server
       #   env:
