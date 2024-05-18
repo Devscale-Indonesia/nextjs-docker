@@ -41,7 +41,7 @@ jobs:
           SERVER_USER: ${{ secrets.SERVER_USER }}
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         run: |
-          sshpass -p "${SERVER_PASSWORD}" ssh -q -vvv -T ${SERVER_USER}@${SERVER_HOST} << 'EOF'
+          sshpass -p "${SERVER_PASSWORD}" ssh -o StrictHostKeyChecking=no -T ${SERVER_USER}@${SERVER_HOST} << 'EOF'
             docker pull ${{ secrets.DOCKER_USERNAME }}/nextjsdocker:latest
             cd /app
             docker-compose down
