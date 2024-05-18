@@ -48,4 +48,4 @@ jobs:
       #       docker-compose -f docker-compose.prod.yml up -d
       #     EOF
       - name: test action
-        run: echo ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}
+        run: sshpass -p "${SERVER_PASSWORD}" ssh ${SERVER_USER}@${SERVER_HOST}
