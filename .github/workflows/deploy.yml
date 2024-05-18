@@ -9,41 +9,43 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      # - name: Checkout repository
+      #   uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20.x"
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: "20.x"
 
-      - name: Install dependencies
-        run: npm install
+      # - name: Install dependencies
+      #   run: npm install
 
-      - name: Build Docker Image
-        run: docker build -t  ${{ secrets.DOCKER_USERNAME }}/nextjsdocker .
+      # - name: Build Docker Image
+      #   run: docker build -t  ${{ secrets.DOCKER_USERNAME }}/nextjsdocker .
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+      # - name: Login to DockerHub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Push Docker Image
-        run: docker push  ${{ secrets.DOCKER_USERNAME }}/nextjsdocker
+      # - name: Push Docker Image
+      #   run: docker push  ${{ secrets.DOCKER_USERNAME }}/nextjsdocker
 
-      - name: Install sshpass
-        run: sudo apt-get install -y sshpass
+      # - name: Install sshpass
+      #   run: sudo apt-get install -y sshpass
 
-      - name: Deploy to server
-        env:
-          SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-        run: |
-          sshpass -p "${SERVER_PASSWORD}" ssh ${SERVER_USER}@${SERVER_HOST} << EOF
-            docker pull ${{ secrets.DOCKER_USERNAME }}/nextjsdocker:latest
-            cd /app
-            docker-compose down
-            docker-compose -f docker-compose.prod.yml up -d
-          EOF
+      # - name: Deploy to server
+      #   env:
+      #     SERVER_HOST: ${{ secrets.SERVER_HOST }}
+      #     SERVER_USER: ${{ secrets.SERVER_USER }}
+      #     SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+      #   run: |
+      #     sshpass -p "${SERVER_PASSWORD}" ssh ${SERVER_USER}@${SERVER_HOST} << EOF
+      #       docker pull ${{ secrets.DOCKER_USERNAME }}/nextjsdocker:latest
+      #       cd /app
+      #       docker-compose down
+      #       docker-compose -f docker-compose.prod.yml up -d
+      #     EOF
+      - name: test action
+        run: echo ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}
