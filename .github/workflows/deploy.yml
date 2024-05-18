@@ -35,17 +35,15 @@ jobs:
       - name: Install sshpass
         run: sudo apt-get install -y sshpass
 
-      # - name: Deploy to server
-      #   env:
-      #     SERVER_HOST: ${{ secrets.SERVER_HOST }}
-      #     SERVER_USER: ${{ secrets.SERVER_USER }}
-      #     SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
-      #   run: |
-      #     sshpass -p "${SERVER_PASSWORD}" ssh ${SERVER_USER}@${SERVER_HOST} << EOF
-      #       docker pull ${{ secrets.DOCKER_USERNAME }}/nextjsdocker:latest
-      #       cd /app
-      #       docker-compose down
-      #       docker-compose -f docker-compose.prod.yml up -d
-      #     EOF
-      - name: test action
-        run: sshpass -p "${SERVER_PASSWORD}" ssh ${SERVER_USER}@${SERVER_HOST}
+      - name: Deploy to server
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -p "${SERVER_PASSWORD}" ssh ${SERVER_USER}@${SERVER_HOST} << EOF
+            docker pull ${{ secrets.DOCKER_USERNAME }}/nextjsdocker:latest
+            cd /app
+            docker-compose down
+            docker-compose -f docker-compose.prod.yml up -d
+          EOF
