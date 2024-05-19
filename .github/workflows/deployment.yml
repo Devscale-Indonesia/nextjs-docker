@@ -1,0 +1,14 @@
+name: CI/CD Learning
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: "Learning"
+        run: echo "Learning CI/CD"
