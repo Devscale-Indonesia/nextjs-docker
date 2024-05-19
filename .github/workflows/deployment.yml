@@ -10,5 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: "Learning"
-        run: echo "Learning CI/CD"
+      - name: Install SSHPASS
+        run: sudo apt-get install -y sshpass
+
+      - name: Deploy to Server
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          sshpass -p "${SERVER_PASSWORD}" ssh -o StrictHostKeyChecking=no -T ${SERVER_USER}@${SERVER_HOST} << 'EOF'
+            cd nextjsdocker
+            git pull origin main
+            docker-compose down
+            docker-compose up --build -d
+          EOF
